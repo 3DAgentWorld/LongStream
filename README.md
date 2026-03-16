@@ -8,9 +8,9 @@
 </p>
 
 <p align="center">
-  <video src="examples/teaser.mp4" controls playsinline muted preload="metadata" width="960">
-    Your browser does not support the video tag. Download <a href="examples/teaser.mp4">examples/teaser.mp4</a>.
-  </video>
+  <a href="examples/teaser.mp4">
+    <img src="examples/teaser.gif" alt="LongStream teaser" width="960">
+  </a>
 </p>
 
 ## Abstract
