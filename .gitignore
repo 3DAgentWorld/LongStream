@@ -1,0 +1,32 @@
+.DS_Store
+
+# Python cache and build artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+.Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+build/
+dist/
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local runtime artifacts
+outputs/
+skyseg.onnx
+
+# Local checkpoints and weights
+checkpoints/*.pt
+checkpoints/*.pth
+checkpoints/*.ckpt
+checkpoints/*.bin
+checkpoints/*.safetensors

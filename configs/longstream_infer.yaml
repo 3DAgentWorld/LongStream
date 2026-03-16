@@ -1,0 +1,84 @@
+device: cuda
+
+model:
+  checkpoint: checkpoints/50_longstream.pt
+  strict_load: false
+  hf:
+    repo_id: null
+    filename: null
+    revision: null
+    local_dir: checkpoints
+  longstream_cfg:
+    img_size: 518
+    patch_size: 14
+    embed_dim: 1024
+    window_size: 48
+    use_role_embedding: false
+    enable_scale_token: true
+    disable_keyframe_distinction: true
+    use_segment_mask: false
+    enable_camera_head: false
+    freeze: none
+    use_rel_pose_head: true
+    rel_pose_head_cfg:
+      enabled: true
+      keyframe_mode: fixed
+      keyframe_stride: 8
+      reference_source: pred
+      detach_reference: false
+      trunk_depth: 4
+      pose_mode: SE3
+      num_heads: 16
+      mlp_ratio: 4
+      init_values: 0.01
+      trans_act: linear
+      quat_act: linear
+      use_pair_cross_attn: false
+      xattn_temperature: 1.0
+      use_precat: false
+      use_kf_role_embed: false
+      kf_role_embed_init_std: 0.02
+      fl_act: relu
+      use_global_scale: false
+      reinit_camera_head: false
+
+inference:
+  mode: batch_refresh
+  streaming_mode: causal
+  window_size: 48
+  keyframe_mode: fixed
+  keyframe_stride: 8
+  refresh: 4
+  rel_pose_head_cfg:
+    num_iterations: 4
+
+data:
+  format: generalizable
+  data_roots_file: data_roots.txt
+  camera: null
+  img_path: /horizon-bucket/saturn_v_4dlabel/004_vision/01_users/chong.cheng/datasets/kitti/dataset
+  stride: 1
+  max_frames: null
+  size: 518
+  crop: false
+  patch_size: 14
+
+output:
+  root: outputs
+  save_videos: true
+  save_points: true
+  save_frame_points: true
+  save_depth: true
+  save_images: true
+  mask_sky: true
+  max_full_pointcloud_points: 2000000
+  max_frame_pointcloud_points: 200000
+  skyseg_path: skyseg.onnx
+
+evaluation:
+  align_scale: true
+  depth_rel_delta_threshold: 1.25
+  point_f1_threshold: 0.25
+  point_eval_max_points: 100000
+  point_eval_voxel_size: null
+  point_eval_oversample_factor: 4

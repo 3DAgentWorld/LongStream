@@ -1,0 +1,12 @@
+numpy
+Pillow
+PyYAML
+huggingface_hub
+opencv-python
+onnxruntime
+matplotlib
+scipy
+pandas==2.1.4
+gradio
+plotly
+trimesh
