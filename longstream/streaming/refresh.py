@@ -42,18 +42,23 @@ def _append_batch_output(
     slice_start: int,
 ) -> None:
     for key in _SEQUENCE_OUTPUT_KEYS:
-        value = output.get(key)
+        value = output.pop(key, None)
         if not isinstance(value, torch.Tensor):
             continue
         if value.ndim < 2 or value.shape[1] != actual_frames:
+            del value
             continue
-        stitched_tensors.setdefault(key, []).append(
-            value[:, slice_start:].detach().cpu()
-        )
+        cpu_value = value[:, slice_start:].detach().cpu()
+        stitched_tensors.setdefault(key, []).append(cpu_value)
+        del value
 
     for key in _SCALAR_OUTPUT_KEYS:
         if key in output:
-            stitched_scalars[key] = _move_scalar_to_cpu(output[key])
+            value = output.pop(key)
+            stitched_scalars[key] = _move_scalar_to_cpu(value)
+            del value
+
+    output.clear()
 
 
 def _finalize_stitched_batches(
@@ -149,6 +154,8 @@ def run_batch_refresh(
         del batch_images
         del batch_is_keyframe
         del batch_keyframe_indices
+        if device.type == "cuda":
+            torch.cuda.empty_cache()
 
     return _finalize_stitched_batches(stitched_tensors, stitched_scalars)
 

@@ -106,7 +106,7 @@ def chamfer_and_f1(
     denom = precision + recall
     f1 = 0.0 if denom <= 0 else float(2.0 * precision * recall / denom)
     return {
-        "cd": float(acc + comp),
+        "cd": float((acc + comp) / 2.0),
         "acc": acc,
         "comp": comp,
         "f1": f1,

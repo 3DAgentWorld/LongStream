@@ -25,7 +25,7 @@ Long-sequence streaming 3D reconstruction remains difficult because autoregressi
 - [x] Evaluation script
 - [x] Plotting utilities
 - [x] Interactive demo
-- [ ] Data processing scripts release. Waiting for company approval.
+- [x] Data processing scripts release
 - [ ] Training scripts and training code release. Waiting for company approval.
 
 ## Installation
