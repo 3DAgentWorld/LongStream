@@ -89,7 +89,7 @@ def compute_sky_mask(image_paths, model_path: str, target_dir: str = None):
                 f"[longstream] skyseg.onnx not found at {model_path}; "
                 "attempting automatic download."
             )
-            with urllib.request.urlopen(SKYSEG_URL) as src, open(
+            with urllib.request.urlopen(SKYSEG_URL, timeout=30) as src, open(
                 model_path, "wb"
             ) as dst:
                 shutil.copyfileobj(src, dst)
